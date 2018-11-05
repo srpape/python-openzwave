@@ -106,7 +106,7 @@ class Template(object):
             return None
         exts = self.get_default_exts()
         exts['define_macros'] += [('PY_SSIZE_T_CLEAN',1)]
-        exts['sources'] = ["openzwave-embed/open-zwave-master/python-openzwave/src-lib/libopenzwave/libopenzwave.cpp"]
+        exts['sources'] = ["openzwave-embed/open-zwave-hass/python-openzwave/src-lib/libopenzwave/libopenzwave.cpp"]
         exts["include_dirs"] += [ "src-lib/libopenzwave/" ]
         return exts
 
@@ -628,7 +628,7 @@ class Template(object):
         except Exception:
             log.warn("Can't get package list from pip.")
 
-    def get_openzwave(self, url='https://codeload.github.com/OpenZWave/open-zwave/zip/master'):
+    def get_openzwave(self, url='https://codeload.github.com/home-assistant/open-zwave/zip/hass'):
         #Get openzwave
         """download an archive to a specific location"""
         dest,tail = os.path.split(self.openzwave)
@@ -705,13 +705,13 @@ class DevTemplate(Template):
         ctx = self.system_context(ctx, static=True)
         return ctx
 
-    def get_openzwave(self, url='https://codeload.github.com/OpenZWave/open-zwave/zip/master'):
+    def get_openzwave(self, url='https://codeload.github.com/home-assistant/open-zwave/zip/hass'):
         return True
 
 class GitTemplate(Template):
 
     def __init__(self, **args):
-        Template.__init__(self, openzwave=os.path.join("openzwave-git", 'open-zwave-master'), **args)
+        Template.__init__(self, openzwave=os.path.join("openzwave-git", 'open-zwave-hass'), **args)
 
     def get_context(self):
         ctx = self.cython_context()
@@ -721,7 +721,7 @@ class GitTemplate(Template):
         ctx = self.system_context(ctx, static=True)
         return ctx
 
-    def get_openzwave(self, url='https://codeload.github.com/OpenZWave/open-zwave/zip/master'):
+    def get_openzwave(self, url='https://codeload.github.com/home-assistant/open-zwave/zip/hass'):
         return Template.get_openzwave(self, url)
 
     def clean_all(self):
@@ -734,7 +734,7 @@ class GitTemplate(Template):
                     shutil.rmtree(self.openzwave)
             except Exception:
                 pass
-        elif tail == 'open-zwave-master':
+        elif tail == 'open-zwave-hass':
             try:
                 log.info('Try to remove {0}'.format(dest))
                 if os.path.isdir(dest):
@@ -777,18 +777,18 @@ class OzwdevTemplate(GitTemplate):
     def __init__(self, **args):
         Template.__init__(self, openzwave=os.path.join("openzwave-git", 'open-zwave-Dev'), **args)
 
-    def get_openzwave(self, url='https://codeload.github.com/OpenZWave/open-zwave/zip/Dev'):
+    def get_openzwave(self, url='https://codeload.github.com/home-assistant/open-zwave/zip/dev'):
         return Template.get_openzwave(self, url)
 
 class OzwdevSharedTemplate(GitSharedTemplate):
 
-    def get_openzwave(self, url='https://codeload.github.com/OpenZWave/open-zwave/zip/Dev'):
+    def get_openzwave(self, url='https://codeload.github.com/home-assistant/open-zwave/zip/dev'):
         return Template.get_openzwave(self, url)
 
 class EmbedTemplate(Template):
 
     def __init__(self, backend='cpp', **args):
-        Template.__init__(self, openzwave=os.path.join("openzwave-embed", 'open-zwave-master'), backend=backend, **args)
+        Template.__init__(self, openzwave=os.path.join("openzwave-embed", 'open-zwave-hass'), backend=backend, **args)
 
     @property
     def build_ext(self):
@@ -809,7 +809,7 @@ class EmbedTemplate(Template):
     def build_requires(self):
         return []
 
-    def get_openzwave(self, url='https://raw.githubusercontent.com/OpenZWave/python-openzwave/master/archives/open-zwave-master-{0}.zip'.format(pyozw_version)):
+    def get_openzwave(self, url='https://raw.githubusercontent.com/home-assistant/python-openzwave/hass/archives/open-zwave-hass-{0}.zip'.format(pyozw_version)):
         ret =  Template.get_openzwave(self, url)
         shutil.copyfile(os.path.join(self.openzwave,'python-openzwave','openzwave.vers.cpp'), os.path.join(self.openzwave,'cpp','src','vers.cpp'))
         return ret
@@ -832,7 +832,7 @@ class EmbedTemplate(Template):
                 shutil.rmtree(self.openzwave)
             except Exception:
                 pass
-        elif tail == 'open-zwave-master':
+        elif tail == 'open-zwave-hass':
             try:
                 log.info('Try to remove {0}'.format(dest))
                 shutil.rmtree(dest)
@@ -885,7 +885,7 @@ class SharedTemplate(Template):
     def copy_openzwave_config(self):
         return sys.platform.startswith("win")
 
-    def get_openzwave(self, url='https://codeload.github.com/OpenZWave/open-zwave/zip/master'):
+    def get_openzwave(self, url='https://codeload.github.com/home-assistant/open-zwave/zip/hass'):
         return True
 
 def parse_template(sysargv):
