@@ -373,6 +373,8 @@ pypi_package:clean-archive
 	cp -f pyozw_pkgconfig.py $(ARCHBASE)/homeassistant_pyozw/
 	cp -f pyozw_setup.py $(ARCHBASE)/homeassistant_pyozw/
 	cp -f pyozw_version.py $(ARCHBASE)/homeassistant_pyozw/
+	cp -f pyozw_win.py $(ARCHBASE)/python_openzwave/
+	cp -f pyozw_progressbar.py $(ARCHBASE)/python_openzwave/
 	cp -f homeassistant_pyozw.egg-info/PKG-INFO $(ARCHBASE)/homeassistant_pyozw/
 	-find $(ARCHBASE)/homeassistant_pyozw/ -name \*.pyc -delete 2>/dev/null || true
 	-find $(ARCHBASE)/homeassistant_pyozw/ -name \*.so -delete 2>/dev/null || true
