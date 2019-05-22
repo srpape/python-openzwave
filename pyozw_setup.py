@@ -810,7 +810,7 @@ class EmbedTemplate(Template):
     def build_requires(self):
         return []
 
-    def get_openzwave(self, url='https://raw.githubusercontent.com/home-assistant/python-openzwave/hass/archives/open-zwave-hass-{0}.zip'.format(pyozw_version)):
+    def get_openzwave(self, url='https://raw.githubusercontent.com/srpape/python-openzwave/hass/archives/open-zwave-hass-{0}.zip'.format(pyozw_version)):
         ret =  Template.get_openzwave(self, url)
         shutil.copyfile(os.path.join(self.openzwave,'python-openzwave','openzwave.vers.cpp'), os.path.join(self.openzwave,'cpp','src','vers.cpp'))
         return ret
